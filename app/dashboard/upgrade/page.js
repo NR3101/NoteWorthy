@@ -29,7 +29,7 @@ const PlanFeature = ({ text }) => (
 
 const UpgradePlan = () => {
   const { toast } = useToast();
-  const { user, isLoaded } = useUser();
+  const { user } = useUser();
   const updateUserPlanMutation = useMutation(api.user.updateUserPlan);
   const userInfo = useQuery(api.user.getUserInfo, {
     email: user?.primaryEmailAddress?.emailAddress,
