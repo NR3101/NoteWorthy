@@ -3,9 +3,15 @@
 import { api } from "@/convex/_generated/api";
 import { useToast } from "@/hooks/use-toast";
 import { useUser } from "@clerk/nextjs";
-import { PayPalButtons } from "@paypal/react-paypal-js";
 import { useMutation, useQuery } from "convex/react";
 import { Loader2 } from "lucide-react";
+import dynamic from 'next/dynamic';
+
+// Dynamically import PayPalButtons with SSR disabled
+const PayPalButtons = dynamic(
+  () => import("@paypal/react-paypal-js").then(mod => mod.PayPalButtons),
+  { ssr: false }
+);
 
 const PlanFeature = ({ text }) => (
   <li className="flex items-center gap-2">
