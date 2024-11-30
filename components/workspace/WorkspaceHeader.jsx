@@ -55,7 +55,7 @@ const WorkspaceHeader = ({ fileName }) => {
   };
 
   return (
-    <div className="sticky top-0 z-50 flex items-center justify-between p-4 bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg border-b border-gray-100 dark:border-gray-800 transition-all duration-200 shadow-sm">
+    <div className="sticky top-0 z-[100] flex items-center justify-between p-4 bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg border-b border-gray-100 dark:border-gray-800 transition-all duration-200 shadow-sm">
       <div className="hover:scale-[1.02] transition-transform duration-200">
         <Logo />
       </div>

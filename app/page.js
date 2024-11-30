@@ -75,8 +75,8 @@ export default function HomePage() {
       <main className="flex-1">
         <section className="w-full py-12 md:py-24 lg:py-32 relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-purple-100/90 to-fuchsia-100/90 dark:from-purple-900/90 dark:to-purple-800/90 backdrop-blur-sm" />
-          <div className="container px-4 md:px-6 relative z-10">
-            <div className="flex flex-col items-center text-center max-w-3xl mx-auto space-y-8">
+          <div className="container mx-auto px-4 md:px-6 relative z-10 max-w-7xl">
+            <div className="flex flex-col items-center text-center space-y-8">
               <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl">
                 Make Note-Taking
                 <br />
@@ -89,7 +89,7 @@ export default function HomePage() {
                 Get More from Your PDF Notes: Summaries, Highlights, and Key
                 Insights with just a few clicks.
               </p>
-              <div className="space-x-4">
+              <div className="flex flex-col sm:flex-row gap-4 sm:gap-4">
                 <Button
                   onClick={handleGetStarted}
                   className="bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-700 hover:to-fuchsia-700 text-white rounded-full px-8 shadow-md hover:shadow-purple-200 dark:hover:shadow-purple-900/20 transition-all duration-200"
@@ -98,8 +98,7 @@ export default function HomePage() {
                 </Button>
                 <Button
                   variant="outline"
-                  className="rounded-full px-8 border-purple-200 dark:border-purple-800 hover:bg-purple-50 dark:hover:bg-purple-50
-                  dark:hover:text-purple-900 transition-colors duration-200"
+                  className="rounded-full px-8 border-purple-200 dark:border-purple-800 hover:bg-purple-50 dark:hover:bg-purple-50 dark:hover:text-purple-900 transition-colors duration-200"
                 >
                   Learn more
                 </Button>
@@ -112,7 +111,7 @@ export default function HomePage() {
           id="features"
           className="w-full py-12 md:py-24 lg:py-32 bg-white dark:bg-gray-900"
         >
-          <div className="container px-4 md:px-6">
+          <div className="container mx-auto px-4 md:px-6 max-w-7xl">
             <h2 className="text-3xl font-bold text-center mb-12 bg-gradient-to-r from-purple-600 to-fuchsia-600 dark:from-purple-400 dark:to-fuchsia-400 bg-clip-text text-transparent">
               What We Offer?
             </h2>
@@ -182,26 +181,28 @@ export default function HomePage() {
         </section>
 
         <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-br from-purple-600 to-fuchsia-600 dark:from-purple-500 dark:to-fuchsia-500 text-white">
-          <div className="container px-4 md:px-6 text-center">
-            <h2 className="text-3xl font-bold mb-4">
-              Ready to Supercharge Your Note-Taking?
-            </h2>
-            <p className="mb-8 text-lg opacity-90">
-              Join thousands of users and start your journey with NoteWorthy
-              today.
-            </p>
-            <Button
-              onClick={handleGetStarted}
-              className="bg-white text-purple-600 dark:text-purple-500 rounded-full px-8 hover:bg-gray-50 dark:hover:bg-gray-100 transition-colors duration-200 shadow-lg hover:shadow-purple-500/20"
-            >
-              {!isLoaded ? (
-                <Loader2 className="w-4 h-4 animate-spin" />
-              ) : isSignedIn ? (
-                "Go to Dashboard"
-              ) : (
-                "Get Started Now"
-              )}
-            </Button>
+          <div className="container mx-auto px-4 md:px-6 max-w-7xl">
+            <div className="text-center">
+              <h2 className="text-3xl font-bold mb-4">
+                Ready to Supercharge Your Note-Taking?
+              </h2>
+              <p className="mb-8 text-lg opacity-90">
+                Join thousands of users and start your journey with NoteWorthy
+                today.
+              </p>
+              <Button
+                onClick={handleGetStarted}
+                className="bg-white text-purple-600 dark:text-purple-500 rounded-full px-8 hover:bg-gray-50 dark:hover:bg-gray-100 transition-colors duration-200 shadow-lg hover:shadow-purple-500/20"
+              >
+                {!isLoaded ? (
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                ) : isSignedIn ? (
+                  "Go to Dashboard"
+                ) : (
+                  "Get Started Now"
+                )}
+              </Button>
+            </div>
           </div>
         </section>
       </main>

@@ -15,11 +15,13 @@ import { Button } from "../ui/button";
 import { useAction, useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { useState } from "react";
-import { Loader, Plus } from "lucide-react";
+import { Loader } from "lucide-react";
 import uuid4 from "uuid4";
 import { useUser } from "@clerk/nextjs";
 import axios from "axios";
 import { useToast } from "@/hooks/use-toast";
+import Lottie from "lottie-react";
+import uploadAnimation from "@/public/animations/upload-animation.json";
 
 const UploadDialog = ({ hasReachedLimit }) => {
   const { toast } = useToast();
@@ -33,11 +35,27 @@ const UploadDialog = ({ hasReachedLimit }) => {
   const getFileUrl = useMutation(api.fileStorage.getFileUrl);
   const embedDocuments = useAction(api.myAction.ingest);
 
+  const resetFileState = () => {
+    setFile(null);
+    setFileName("");
+  };
+
   const onFileSelect = async (e) => {
     setFile(e.target.files[0]);
   };
 
   const onUpload = async () => {
+    if (!file) {
+      toast({
+        variant: "default",
+        title: "No File Selected",
+        description: "Please select a PDF file to upload",
+        className:
+          "border-red-400 dark:border-red-500 bg-red-50 dark:bg-red-900/90 text-red-800 dark:text-red-100",
+      });
+      return;
+    }
+
     setIsLoading(true);
 
     // Step 1: Get a short-lived upload URL
@@ -80,7 +98,16 @@ const UploadDialog = ({ hasReachedLimit }) => {
   };
 
   return (
-    <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+    <Dialog
+      open={isDialogOpen}
+      onOpenChange={(open) => {
+        if (isLoading) return;
+        if (!open) {
+          resetFileState();
+        }
+        setIsDialogOpen(open);
+      }}
+    >
       <DialogTrigger asChild>
         <Button
           onClick={() => setIsDialogOpen(true)}
@@ -90,7 +117,36 @@ const UploadDialog = ({ hasReachedLimit }) => {
           +Upload File
         </Button>
       </DialogTrigger>
-      <DialogContent className="w-[90%] min-h-fit max-h-[90vh] overflow-y-auto mx-auto sm:max-w-[425px] bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 rounded-lg">
+      <DialogContent
+        className="w-[90%] min-h-fit max-h-[90vh] overflow-y-auto mx-auto sm:max-w-[425px] bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 rounded-lg"
+        onPointerDownOutside={(e) => {
+          if (isLoading) {
+            e.preventDefault();
+          } else {
+            resetFileState();
+          }
+        }}
+      >
+        {isLoading && (
+          <div className="absolute inset-0 bg-white dark:bg-gray-900 z-50 flex flex-col items-center justify-center rounded-lg px-8">
+            <div className="w-72 h-72">
+              <Lottie
+                animationData={uploadAnimation}
+                loop={true}
+                className="w-full h-full"
+              />
+            </div>
+            <div className="flex flex-col items-center -mt-4">
+              <h3 className="text-xl font-medium text-gray-900 dark:text-gray-100">
+                Processing your file
+              </h3>
+              <p className="text-base text-gray-500 dark:text-gray-400 text-center mt-1 max-w-sm">
+                We're preparing your document for an amazing experience
+              </p>
+            </div>
+          </div>
+        )}
+
         <DialogHeader className="space-y-2">
           <DialogTitle className="text-xl sm:text-2xl font-bold text-center bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent">
             Upload File
@@ -139,14 +195,18 @@ const UploadDialog = ({ hasReachedLimit }) => {
               type="button"
               variant="outline"
               className="border-gray-200 dark:border-gray-800 hover:bg-gray-100 dark:hover:bg-gray-800"
+              disabled={isLoading}
+              onClick={resetFileState}
             >
               Cancel
             </Button>
           </DialogClose>
           <Button
             onClick={onUpload}
-            disabled={isLoading}
-            className="bg-purple-600 hover:bg-purple-700 dark:bg-purple-600/90 dark:hover:bg-purple-600"
+            disabled={isLoading || !file}
+            className={`bg-purple-600 hover:bg-purple-700 dark:bg-purple-600/90 dark:hover:bg-purple-600 ${
+              !file ? "opacity-50 cursor-not-allowed" : ""
+            }`}
           >
             {isLoading ? <Loader className="animate-spin" /> : "Upload"}
           </Button>

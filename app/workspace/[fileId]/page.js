@@ -35,15 +35,16 @@ export default function WorkspacePage() {
         class: "focus:outline-none min-h-[calc(100vh-8rem)] p-5",
       },
     },
-  });
+    immediatelyRender: false
+  }, [/* dependency array */]);
 
   return (
     <EditorProvider value={editor}>
       <div className="flex flex-col h-screen">
         <WorkspaceHeader fileName={fileInfo?.fileName} />
-        <div className="flex-1 grid grid-cols-2 divide-x divide-gray-200 dark:divide-gray-800">
+        <div className="flex-1 grid grid-cols-2 overflow-hidden">
           {/* Text Editor */}
-          <div className="overflow-y-auto">
+          <div className="overflow-y-auto border-r border-gray-200 dark:border-gray-800 scrollbar-none">
             <TextEditor fileId={fileId} />
           </div>
           {/* PDF Viewer */}
