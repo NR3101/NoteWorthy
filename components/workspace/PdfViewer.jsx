@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useEffect } from "react";
 import { Loader2 } from "lucide-react";
 
@@ -27,6 +29,10 @@ const PdfViewer = ({ fileUrl }) => {
       clearTimeout(timer);
     };
   }, []);
+
+  if (typeof window === "undefined") {
+    return null;
+  }
 
   return (
     <div className="h-full sticky top-0">
