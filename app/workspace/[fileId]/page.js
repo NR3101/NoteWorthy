@@ -40,6 +40,7 @@ export default function WorkspacePage() {
         class: "focus:outline-none min-h-[calc(100vh-8rem)] p-5",
       },
     },
+    immediatelyRender: false,
   });
 
   return (

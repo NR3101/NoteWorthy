@@ -6,8 +6,11 @@ import { Loader2 } from "lucide-react";
 const PdfViewer = ({ fileUrl }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [iframeHeight, setIframeHeight] = useState("100%");
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
+    setIsMounted(true);
+
     const updateDimensions = () => {
       const container = document.querySelector(".pdf-container");
       if (container) {
@@ -30,7 +33,8 @@ const PdfViewer = ({ fileUrl }) => {
     };
   }, []);
 
-  if (typeof window === "undefined") {
+  // Don't render anything until the component is mounted on the client
+  if (!isMounted) {
     return null;
   }
 
