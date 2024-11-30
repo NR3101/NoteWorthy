@@ -1,7 +1,7 @@
 "use client";
 
 import PdfViewer from "@/components/workspace/PdfViewer";
-import TextEditor from "@/components/workspace/TextEditor";
+import dynamic from "next/dynamic";
 import WorkspaceHeader from "@/components/workspace/WorkspaceHeader";
 import { api } from "@/convex/_generated/api";
 import { useQuery } from "convex/react";
@@ -13,6 +13,11 @@ import Underline from "@tiptap/extension-underline";
 import Highlight from "@tiptap/extension-highlight";
 import TextAlign from "@tiptap/extension-text-align";
 import { EditorProvider } from "@/context/EditorContext";
+
+// Dynamically import components that use TipTap
+const TextEditor = dynamic(() => import("@/components/workspace/TextEditor"), {
+  ssr: false,
+});
 
 export default function WorkspacePage() {
   const { fileId } = useParams();
@@ -44,6 +49,7 @@ export default function WorkspacePage() {
         <div className="flex-1 grid grid-cols-2 overflow-hidden">
           {/* Text Editor */}
           <div className="overflow-y-auto border-r border-gray-200 dark:border-gray-800 scrollbar-none">
+            {/* Use the dynamically imported TextEditor */}
             <TextEditor fileId={fileId} />
           </div>
           {/* PDF Viewer */}
