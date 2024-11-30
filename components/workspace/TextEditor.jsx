@@ -24,9 +24,9 @@ const TextEditor = ({ fileId }) => {
   }
 
   return (
-    <div className="relative h-full bg-white dark:bg-gray-900 transition-colors duration-200">
+    <div className="relative h-full overflow-hidden bg-white dark:bg-gray-900 transition-colors duration-200">
       <EditorExtensions editor={editor} />
-      <div className="h-[calc(100vh-8rem)] overflow-y-scroll scrollbar-none">
+      <div className="h-[calc(100vh-8rem)] overflow-y-auto scrollbar-none">
         <div className="prose prose-sm md:prose-base max-w-none px-8 py-6 dark:prose-invert prose-headings:font-semibold prose-p:text-gray-600 dark:prose-p:text-gray-300 prose-pre:bg-gray-100 dark:prose-pre:bg-gray-800 prose-pre:text-sm prose-code:text-purple-600 dark:prose-code:text-purple-400 prose-blockquote:border-l-purple-500 prose-blockquote:bg-gray-50 dark:prose-blockquote:bg-gray-800/50 prose-blockquote:py-1 prose-blockquote:px-4">
           <EditorContent editor={editor} />
         </div>
